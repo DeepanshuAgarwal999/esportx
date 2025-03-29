@@ -1,34 +1,40 @@
+import GlobalLayout from "@/components/global/global-layout";
 import Button from "@/components/ui/Button";
 import InputField from "@/components/ui/InputField";
-import { useRouter } from "expo-router";
-import { useState } from "react";
-import { Alert, ImageBackground, SafeAreaView, Text, View } from "react-native";
+import { useAlert } from "@/context/alert-provider";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { useEffect, useState } from "react";
+import { Text, View } from "react-native";
 
 const EnterOtpScreen = () => {
-  const router = useRouter()
   const [otp, setOtp] = useState('')
+  const router = useRouter()
+  const { phone } = useLocalSearchParams<{ phone: string }>();
+  const { alert } = useAlert()
+
+  const otpLength = 4;
   const handleOtpSubmit = () => {
-    if (otp.length === 6) {
+    if (otp.length === otpLength) {
+      router.push('/(auth)/account-detail')
       setOtp('')
-      router.navigate('/(auth)/enter-otp')
-      Alert.alert('User login successfully')
     }
     else {
-      Alert.alert('Enter a valid 6 digit OTP')
+      alert('Failed', `Enter a valid ${otpLength} digit OTP`)
     }
   }
-  return <SafeAreaView className="bg-banner" style={{ flex: 1 }}>
-    <ImageBackground
-      source={require("../../assets/images/app_banner.png")}
-      style={{ flex: 1, backgroundPosition: "center", backgroundSize: "cover" }}
-      className="flex items-center justify-center"
-    >
-      <View className="w-60 flex flex-col gap-8">
-        <InputField autoFocus placeholder="Enter OTP" keyboardType="numeric" onChangeText={(text) => setOtp(text)} value={otp} />
-        <Button onPress={() => handleOtpSubmit()} >Submit OTP </Button>
+  useEffect(() => {
+    if (!phone) router.navigate('/(auth)/enter-mobile')
+  }, [phone])
+
+  return <GlobalLayout>
+    <View className="flex items-center justify-center h-full">
+      <Text className="text-white">{otpLength} digit OTP sent to your mobile no. {phone}</Text>
+      <View className="w-52 flex flex-col gap-8 mt-8">
+        <InputField autoFocus placeholder="Enter OTP" keyboardType="numeric" onChangeText={(text) => setOtp(text)} value={otp} maxLength={otpLength} />
+        <Button onPress={() => handleOtpSubmit()} className="w-full">Submit OTP </Button>
       </View>
-    </ImageBackground>
-  </SafeAreaView>
+    </View>
+  </GlobalLayout>
 };
 
 export default EnterOtpScreen;

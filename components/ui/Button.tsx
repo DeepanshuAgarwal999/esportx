@@ -1,5 +1,5 @@
-import React from 'react';
-import { Pressable, Text } from 'react-native';
+import React, { useState } from 'react';
+import { Pressable, Text, Animated, StyleSheet } from 'react-native';
 
 type ButtonProps = {
   children: React.ReactNode;
@@ -10,17 +10,49 @@ type ButtonProps = {
 };
 
 const Button = ({ children, onPress, disabled = false, className, textClassName }: ButtonProps) => {
+  const scale = useState(new Animated.Value(1))[0]; // Initial scale value
+
+  const handlePressIn = () => {
+    Animated.spring(scale, {
+      toValue: 0.95, // Scale down to 95%
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const handlePressOut = () => {
+    Animated.spring(scale, {
+      toValue: 1, // Reset scale to 100%
+      useNativeDriver: true,
+    }).start();
+  };
+
   return (
-    <Pressable
-      onPress={onPress}
-      disabled={disabled}
-      className={` py-4  px-4 bg-[#333333] cursor-pointer ${className}`}
-    >
-      <Text className={`text-white text-center text-xl   ${textClassName}`}>
-        {children}
-      </Text>
-    </Pressable>
+    <Animated.View style={{ transform: [{ scale }] }}>
+      <Pressable
+        onPress={onPress}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        disabled={disabled}
+        style={({ pressed }) => [
+          {
+            opacity: pressed ? 0.8 : 1, // Default Pressable behavior
+          },
+          styles.button,
+        ]}
+        className={`py-4 px-4 bg-[#333333] cursor-pointer w-fit ${className}`}
+      >
+        <Text className={`text-white text-center text-2xl font-normal ${textClassName}`}>
+          {children}
+        </Text>
+      </Pressable>
+    </Animated.View>
   );
 };
 
-export default Button
+const styles = StyleSheet.create({
+  button: {
+    alignSelf: 'center', // Center the button if needed
+  },
+});
+
+export default Button;

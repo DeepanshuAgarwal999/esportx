@@ -1,18 +1,14 @@
+import GlobalLayout from "@/components/global/global-layout";
 import Button from "@/components/ui/Button";
 import { useRouter } from "expo-router";
-import { ImageBackground, SafeAreaView, Text, View } from "react-native";
+import { View } from "react-native";
 
 const LoginScreen = () => {
     const router = useRouter();
-
     return (
-        <SafeAreaView style={{ flex: 1 }}>
-            <ImageBackground
-                source={require("../../assets/images/app_banner.png")}
-                style={{ flex: 1 }}
-                className="flex items-center justify-center"
-            >
-                <View className="w-60 flex flex-col gap-8">
+        <GlobalLayout>
+            <View className="flex items-center justify-center h-full">
+                <View className="w-52 flex  gap-8">
                     <Button
                         onPress={() => router.navigate('/(auth)/enter-mobile')}
                         className="w-full"
@@ -23,8 +19,9 @@ const LoginScreen = () => {
                         Create Account
                     </Button>
                 </View>
-            </ImageBackground>
-        </SafeAreaView>
+            </View>
+        </GlobalLayout>
+
     );
 };
 
