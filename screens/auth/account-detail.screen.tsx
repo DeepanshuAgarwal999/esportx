@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Button from "@/components/ui/Button";
 import InputField from "@/components/ui/InputField";
 import { useRouter } from "expo-router";
-import { ImageBackground, ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import Checkbox from "expo-checkbox";
 import { useAlert } from "@/context/alert-provider";
 import * as SecureStore from 'expo-secure-store'
-import CustomSafeArea from "@/components/wrapper/CustomSafeArea";
 import GlobalLayout from "@/components/global/global-layout";
 
 type Credentials = {
