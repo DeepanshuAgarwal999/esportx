@@ -1,23 +1,16 @@
 import React from "react";
 import { ImageBackground, StyleSheet, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type GlobalLayoutProps = {
     children: React.ReactNode;
 };
 
 const GlobalLayout: React.FC<GlobalLayoutProps> = ({ children }) => {
-    const insets = useSafeAreaInsets();
     return (
-        <View
+        <SafeAreaView
             style={[
                 styles.safeArea,
-                {
-                    paddingTop: insets.top,
-                    paddingLeft: insets.left,
-                    paddingRight: insets.right,
-                    paddingBottom: insets.bottom,
-                },
             ]}
         >
             <ImageBackground
@@ -26,7 +19,7 @@ const GlobalLayout: React.FC<GlobalLayoutProps> = ({ children }) => {
             >
                 {children}
             </ImageBackground>
-        </View>
+        </SafeAreaView>
     );
 };
 

@@ -1,6 +1,7 @@
 {
   "expo": {
-    "name": "reactnative_game",
+    "name": "EsportX",
+    "displayName": "EsportX",
     "slug": "reactnative_game",
     "version": "1.0.0",
     "orientation": "landscape",

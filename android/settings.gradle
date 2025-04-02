@@ -21,7 +21,7 @@ extensions.configure(com.facebook.react.ReactSettingsExtension) { ex ->
   }
 }
 
-rootProject.name = 'reactnative_game'
+rootProject.name = 'esportx'
 
 dependencyResolutionManagement {
   versionCatalogs {

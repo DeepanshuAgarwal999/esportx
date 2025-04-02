@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@/components/ui/Button";
 import InputField from "@/components/ui/InputField";
 import { useRouter } from "expo-router";
@@ -7,6 +7,7 @@ import Checkbox from "expo-checkbox";
 import { useAlert } from "@/context/alert-provider";
 import * as SecureStore from 'expo-secure-store'
 import GlobalLayout from "@/components/global/global-layout";
+import { useAuth } from "@/context/auth-provider";
 
 type Credentials = {
     username: string;
@@ -26,6 +27,13 @@ const AccountDetailScreen = () => {
     const [errors, setErrors] = useState<Partial<Credentials>>({});
     const router = useRouter();
     const { alert } = useAlert();
+    const { setUser, user } = useAuth()
+
+    useEffect(() => {
+        if (user) {
+            router.replace('/')
+        }
+    }, [user])
 
     const validateForm = (): boolean => {
         const newErrors: Partial<Credentials> = {};
@@ -66,7 +74,8 @@ const AccountDetailScreen = () => {
 
         if (validateForm()) {
             await SecureStore.setItemAsync('user', JSON.stringify(credentials));
-            router.push('/');
+            setUser(credentials)
+            router.replace('/');
         }
     };
 
@@ -88,6 +97,7 @@ const AccountDetailScreen = () => {
                         onChangeText={(text) => setCredentials({ ...credentials, username: text })}
                         inputClassName="!text-center !py-2.5"
                         value={credentials.username}
+                        disableFullscreenUI={true}
                     />
                     {errors.username && <Text style={{ color: "red", fontSize: 12 }}>{errors.username}</Text>}
 
@@ -96,6 +106,7 @@ const AccountDetailScreen = () => {
                         onChangeText={(text) => setCredentials({ ...credentials, userId: text })}
                         inputClassName="!text-center !py-2.5"
                         value={credentials.userId}
+                        disableFullscreenUI={true}
                     />
                     {errors.userId && <Text style={{ color: "red", fontSize: 12 }}>{errors.userId}</Text>}
 
@@ -105,6 +116,7 @@ const AccountDetailScreen = () => {
                         className="w-full"
                         inputClassName="!text-center !py-2.5"
                         value={credentials.upiId}
+                        disableFullscreenUI={true}
                     />
                     {errors.upiId && <Text style={{ color: "red", fontSize: 12 }}>{errors.upiId}</Text>}
 
@@ -115,6 +127,7 @@ const AccountDetailScreen = () => {
                         onChangeText={(text) => setCredentials({ ...credentials, phone: text })}
                         inputClassName="!text-center !py-2.5"
                         value={credentials.phone}
+                        disableFullscreenUI={true}
                     />
                     {errors.phone && <Text style={{ color: "red", fontSize: 12 }}>{errors.phone}</Text>}
 

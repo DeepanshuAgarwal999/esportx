@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { Dialog, Portal, Button, Paragraph } from "react-native-paper";
+import { BackHandler } from "react-native";
 
 // Context type definition
 type AlertContextType = {
@@ -36,6 +37,22 @@ export const AlertProvider = ({ children }: { children: ReactNode }) => {
         if (alertData?.onConfirm) alertData.onConfirm();
         setAlertData(null);
     };
+
+    useEffect(() => {
+        const handleBackPress = () => {
+            if (alertData) {
+                closeAlert();
+                return true; // Prevent default back action
+            }
+            return false;
+        };
+
+        BackHandler.addEventListener("hardwareBackPress", handleBackPress);
+
+        return () => {
+            BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
+        };
+    }, [alertData]);
 
     return (
         <AlertContext.Provider value={{ alert: showAlert }}>

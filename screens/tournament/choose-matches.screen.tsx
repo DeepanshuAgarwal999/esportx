@@ -9,7 +9,7 @@ const ChooseMatchesScreen = () => {
     const router = useRouter()
     const handleTournamentChange = (key: string, value: string) => {
         setTournament({ ...tournament, [key]: value })
-        router.push('/')
+        router.push('/(routes)/prices')
     }
     return (
         <GlobalLayout>

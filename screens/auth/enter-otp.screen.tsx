@@ -4,7 +4,7 @@ import InputField from "@/components/ui/InputField";
 import { useAlert } from "@/context/alert-provider";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import {  Text, View } from "react-native";
 
 const EnterOtpScreen = () => {
   const [otp, setOtp] = useState('')
@@ -27,10 +27,11 @@ const EnterOtpScreen = () => {
   }, [phone])
 
   return <GlobalLayout>
+
     <View className="flex items-center justify-center h-full">
       <Text className="text-white">{otpLength} digit OTP sent to your mobile no. {phone}</Text>
       <View className="w-52 flex flex-col gap-8 mt-8">
-        <InputField autoFocus placeholder="Enter OTP" keyboardType="numeric" onChangeText={(text) => setOtp(text)} value={otp} maxLength={otpLength} />
+        <InputField placeholder="Enter OTP" disableFullscreenUI={true} keyboardType="numeric" onChangeText={(text) => setOtp(text)} value={otp} maxLength={otpLength} />
         <Button onPress={() => handleOtpSubmit()} className="w-full">Submit OTP </Button>
       </View>
     </View>

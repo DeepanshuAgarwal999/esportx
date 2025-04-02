@@ -8,7 +8,6 @@ def projectRoot = rootDir.getAbsoluteFile().getParentFile().getAbsolutePath()
  * This is the configuration block to customize your React Native Android app.
  * By default you don't need to apply any configuration, just uncomment the lines you need.
  */
-
 react {
     entryFile = file(["node", "-e", "require('expo/scripts/resolveAppEntry')", projectRoot, "android", "absolute"].execute(null, rootDir).text.trim())
     reactNativeDir = new File(["node", "--print", "require.resolve('react-native/package.json')"].execute(null, rootDir).text.trim()).getParentFile().getAbsoluteFile()
@@ -68,7 +67,6 @@ react {
  */
 def enableProguardInReleaseBuilds = true
 def enableSeparateBuildPerCPUArchitecture = true
-
 /**
  * The preferred build flavor of JavaScriptCore (JSC)
  *
@@ -104,7 +102,7 @@ android {
             keyPassword 'android'
         }
     }
-      splits {
+    splits {
         abi {
             enable true
             reset()
@@ -112,8 +110,7 @@ android {
             universalApk false
         }
     }
-    
-   buildTypes {
+    buildTypes {
         debug {
             signingConfig signingConfigs.debug
         }
