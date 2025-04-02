@@ -11,9 +11,9 @@ export default function RootLayout() {
         <AuthContextProvider>
             <PaperProvider>
                 <AlertProvider>
-                    <StatusBar hidden={true} backgroundColor={'#333333'} />
+                    <StatusBar hidden={true} backgroundColor={'#333333'} barStyle={'light-content'} />
                     <TournamentProvider>
-                        <Stack screenOptions={{ headerShown: false }} />
+                        <Stack screenOptions={{ headerShown: false, animation: "slide_from_right" }} />
                     </TournamentProvider>
                 </AlertProvider>
             </PaperProvider>

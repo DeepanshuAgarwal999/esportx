@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Button from "@/components/ui/Button";
 import InputField from "@/components/ui/InputField";
 import { useRouter } from "expo-router";
-import { ScrollView, Text, View } from "react-native";
+import { KeyboardAvoidingView, ScrollView, Text, View } from "react-native";
 import Checkbox from "expo-checkbox";
 import { useAlert } from "@/context/alert-provider";
 import * as SecureStore from 'expo-secure-store'
@@ -78,18 +78,19 @@ const AccountDetailScreen = () => {
             router.replace('/');
         }
     };
-
+    const keyboardOffsetHeight = 10
     return (
         <GlobalLayout>
-            <ScrollView
-                contentContainerStyle={{
+            <KeyboardAvoidingView
+            behavior="height"
+                keyboardVerticalOffset={keyboardOffsetHeight}
+                style={{
                     flexGrow: 1,
                     justifyContent: "center",
                     alignItems: "center",
                     paddingVertical: 10,
                     paddingHorizontal: 10,
                 }}
-                keyboardShouldPersistTaps="handled"
             >
                 <View className={`w-72 flex flex-col ${Object.keys(errors).length > 0 ? "gap-1" : "gap-5"}`}>
                     <InputField
@@ -148,7 +149,7 @@ const AccountDetailScreen = () => {
                         Submit
                     </Button>
                 </View>
-            </ScrollView>
+            </KeyboardAvoidingView>
         </GlobalLayout>
     );
 };
