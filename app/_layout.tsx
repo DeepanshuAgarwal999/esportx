@@ -7,6 +7,7 @@ import { TournamentProvider } from "@/context/tournament-provider";
 import { AuthContextProvider } from "@/context/auth-provider";
 
 export default function RootLayout() {
+
     return (
         <AuthContextProvider>
             <PaperProvider>
