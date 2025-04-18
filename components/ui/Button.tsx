@@ -43,7 +43,7 @@ const Button = ({ children, onPress, disabled = false, isLoading, className, tex
         className={`py-4 px-4 bg-[#333333] cursor-pointer w-fit ${className}`}
       >
         {
-          isLoading ? <ActivityIndicator size={10} color={"#FFF"} /> : <Text className={`text-white text-center text-2xl font-normal ${textClassName}`}>
+          isLoading ? <ActivityIndicator size={24} color={"#FFF"} /> : <Text className={`text-white text-center text-2xl font-normal ${textClassName}`}>
             {children}
           </Text>
         }
