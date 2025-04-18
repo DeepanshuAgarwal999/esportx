@@ -1,26 +1,36 @@
 import GlobalLayout from "@/components/global/global-layout";
 import Button from "@/components/ui/Button";
 import InputField from "@/components/ui/InputField";
+import { useAlert } from "@/context/alert-provider";
+import { AuthService } from "@/services/auth-service";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
-    Alert,
     Keyboard,
     ScrollView,
     TouchableWithoutFeedback,
     View,
-    Platform,
 } from "react-native";
 
 const EnterMobileScreen = () => {
     const [number, setNumber] = useState<string>('');
+    const [isLoading, setIsLoading] = useState(false);
+    const { alert } = useAlert();
     const router = useRouter();
 
-    const handleSubmit = () => {
-        if (number.length === 10) {
-            router.push({ pathname: '/(auth)/enter-otp', params: { phone: number } })
-        } else {
-            Alert.alert('Enter a valid 10 digit mobile number');
+    const handleSubmit = async () => {
+        try {
+            setIsLoading(true)
+            const response = await AuthService.getOTP(number)
+            if (response) {
+                setNumber('')
+                router.push({ pathname: '/(auth)/enter-otp', params: { phone: number } })
+            }
+        } catch (error) {
+            alert('Failed', "Mobile number is not registered")
+        }
+        finally {
+            setIsLoading(false)
         }
     };
 
@@ -35,13 +45,14 @@ const EnterMobileScreen = () => {
                         <InputField
                             placeholder="Enter Mobile No."
                             maxLength={10}
-                            keyboardType="phone-pad"
-                            onChangeText={(text) => setNumber(text)}
+                            value={number}
+                            keyboardType="numeric"
+                            onChangeText={(text) => setNumber(text.slice(0, 10))}
                             className="w-full"
                             textContentType="telephoneNumber"
                             disableFullscreenUI={true}
                         />
-                        <Button onPress={handleSubmit} className="w-full">
+                        <Button isLoading={isLoading} onPress={handleSubmit} className="w-full">
                             Send OTP
                         </Button>
                     </View>
