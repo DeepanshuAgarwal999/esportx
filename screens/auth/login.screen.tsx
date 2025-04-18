@@ -15,7 +15,7 @@ const LoginScreen = () => {
                     >
                         Login
                     </Button>
-                    <Button onPress={() => { }} className="w-full">
+                    <Button onPress={() => { router.navigate("/(auth)/account-detail") }} className="w-full">
                         Create Account
                     </Button>
                 </View>
