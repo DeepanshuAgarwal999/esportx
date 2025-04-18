@@ -23,7 +23,7 @@ const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ children }) =
     useEffect(() => {
         (async () => {
             try {
-                const data = await SecureStore.getItemAsync("user");
+                const data = SecureStore.getItem("user");
                 if (data) {
                     setUser(data);
                 }
