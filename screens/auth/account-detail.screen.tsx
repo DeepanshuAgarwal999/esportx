@@ -79,15 +79,16 @@ const AccountDetailScreen = () => {
                 setIsLoading(true)
                 const user = await AuthService.signUp(userCredentials)
                 if (user) {
-                    SecureStore.setItem('user', JSON.stringify(user.user_details));
-                    setUser(credentials)
                     setCredentials({
                         username: "",
                         userId: "",
                         upiId: "",
                         phone: "",
                     });
-                    router.replace({ pathname: '/(auth)/enter-otp', params: { phone: user.user_details.phone } });
+                    const otpSent = await AuthService.getOTP(user.user_details.phone)
+                    if (otpSent) {
+                        router.push({ pathname: '/(auth)/enter-otp', params: { phone: user.user_details.phone } });
+                    }
                 }
             } catch (error: any) {
                 if (error instanceof AxiosError) {
@@ -109,7 +110,7 @@ const AccountDetailScreen = () => {
     };
     return (
         <GlobalLayout>
-            <KeyboardAvoidingView 
+            <KeyboardAvoidingView
                 behavior="height"
                 style={{ flex: 1 }}
             >
