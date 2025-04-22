@@ -14,7 +14,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/images/logo_black.png",
         "backgroundColor": "#333"
       },
       "package": "com.strugllerxcoder.reactnative_game"
@@ -29,7 +29,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/logo_black.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#333"

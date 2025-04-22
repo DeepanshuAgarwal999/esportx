@@ -27,7 +27,7 @@ const EnterOtpScreen = () => {
         if (response) {
           setUser(response.user)
           SecureStore.setItem('user', JSON.stringify(response.user));
-          router.push('/')
+          router.replace('/')
           setOtp('')
         }
       } catch (error) {
