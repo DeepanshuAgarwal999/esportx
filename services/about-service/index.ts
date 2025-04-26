@@ -1,7 +1,5 @@
 import axiosInstance from "@/config/axios.config";
 
-const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL || "https://demo.esportx.co.in/api";
-
 export class AboutService {
   static async contactUs(credentials: { user_id: string; name: string; email: string; phone: string; subject: string; message: string }) {
     const response = await axiosInstance.post(`/contactUs`, credentials);
