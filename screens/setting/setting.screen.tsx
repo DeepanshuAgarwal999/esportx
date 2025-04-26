@@ -7,11 +7,11 @@ import { View } from 'react-native';
 const buttons: { [key: string]: string } = {
     "AUDIO/SOUND": '/',
     "PERMISSION": '/',
-    "CONTACT US": '/',
+    "CONTACT US": '/(about)/contactus',
     "DELETE ACCOUNT": '/',
     "PRIVACY AND POLICY": '/',
     "TERMS OF USE": '/',
-    "SEND FEEDBACK": '/',
+    "SEND FEEDBACK": '/(about)/sendfeedback',
 };
 
 const SettingScreen = () => {
