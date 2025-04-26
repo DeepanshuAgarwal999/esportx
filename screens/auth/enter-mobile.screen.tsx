@@ -23,8 +23,8 @@ const EnterMobileScreen = () => {
             setIsLoading(true)
             const response = await AuthService.getOTP(number)
             if (response) {
-                setNumber('')
                 router.push({ pathname: '/(auth)/enter-otp', params: { phone: number } })
+                setNumber('')
             }
         } catch (error) {
             alert('Failed', "Mobile number is not registered")
