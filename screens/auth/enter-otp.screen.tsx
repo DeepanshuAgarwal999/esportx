@@ -33,7 +33,7 @@ const EnterOtpScreen = () => {
       } catch (error) {
         console.log(error);
         if (error instanceof AxiosError) {
-          if (error?.response?.status === 402) {
+          if (error.status === 402) {
             alert('Failed', `OTP Expired`)
           }
         }

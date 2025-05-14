@@ -20,6 +20,10 @@ const EnterMobileScreen = () => {
 
     const handleSubmit = async () => {
         try {
+            if (number.length !== 10) {
+                alert('Failed', "Enter a valid 10 digit mobile number")
+                return
+            }
             setIsLoading(true)
             const response = await AuthService.getOTP(number)
             if (response) {

@@ -1,7 +1,8 @@
 import HomeScreen from "@/screens/home/home.screen";
 
-export default function Home() {
+function Home() {
   return (
     <HomeScreen />
   )
 }
+export default Home;

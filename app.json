@@ -14,7 +14,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/images/logo_black.png",
+        "foregroundImage": "./assets/images/logo_black.png",
         "backgroundColor": "#333"
       },
       "package": "com.strugllerxcoder.reactnative_game"

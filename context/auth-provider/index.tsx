@@ -3,7 +3,10 @@ import * as SecureStore from "expo-secure-store";
 import { useRouter } from "expo-router";
 
 type AuthContextType = {
-    user: any;
+    user: {
+        id: number,
+        phone: string,
+    };
     setUser: (user: any) => void;
     logOut: () => void
     loading: boolean
@@ -25,7 +28,7 @@ const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ children }) =
             try {
                 const data = SecureStore.getItem("user");
                 if (data) {
-                    setUser(data);
+                    setUser(JSON.parse(data));
                 }
                 else {
                     router.push('/(auth)/login')

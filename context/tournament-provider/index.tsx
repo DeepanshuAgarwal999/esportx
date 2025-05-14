@@ -1,15 +1,19 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
 
 type Tournament = {
-    teamSize: string;
-    matches: string | null;
-    price: string,
-    tournamentId: string
+    teamSize?: string;
+    price?: {
+        amount: string,
+        id: number
+    },
+    teamId?: number | null,
+    matchId?: number,
+    matchName?: string
 };
 
 type TournamentContextType = {
     tournament: Tournament;
-    setTournament: (tournament: Tournament) => void;
+    setTournament: React.Dispatch<React.SetStateAction<Tournament>>;
 };
 
 const TournamentContext = createContext<TournamentContextType | undefined>(undefined);
@@ -17,18 +21,13 @@ const TournamentContext = createContext<TournamentContextType | undefined>(undef
 export const TournamentProvider = React.memo(({ children }: { children: React.ReactNode }) => {
     const [tournament, setTournamentState] = useState<Tournament>({
         teamSize: "",
-        matches: null,
-        price: '',
-        tournamentId: ''
+        teamId: null
     });
 
     // Memoize the setTournament function to avoid unnecessary re-renders
-    const setTournament = useCallback((newTournament: Tournament) => {
-        setTournamentState(newTournament);
-    }, []);
 
     return (
-        <TournamentContext.Provider value={{ tournament, setTournament }}>
+        <TournamentContext.Provider value={{ tournament, setTournament: setTournamentState }}>
             {children}
         </TournamentContext.Provider>
     );

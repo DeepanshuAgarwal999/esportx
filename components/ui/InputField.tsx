@@ -23,6 +23,7 @@ const InputField = ({
                 style={{ color: "white" }}
                 placeholderTextColor={placeholderTextColor}
                 allowFontScaling={false}
+                disableFullscreenUI={true}
                 className={`text-xl py-4  px-4 bg-[#333333]  text-white outline-none cursor-pointer ${inputClassName}`}
                 {...props}
             />

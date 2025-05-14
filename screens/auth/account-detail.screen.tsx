@@ -92,7 +92,8 @@ const AccountDetailScreen = () => {
                 }
             } catch (error: any) {
                 if (error instanceof AxiosError) {
-                    if (error?.response?.status === 422) {
+                    console.log(error);
+                    if (error.status === 422) {
                         alert('Error', "Either user already exist or Invalid credentials")
                     }
                     else {

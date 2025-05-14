@@ -11,18 +11,20 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   async (config) => {
-    try {
+    try { 
       //   const token = await SecureStore.getItemAsync("token");
       //   if (token) {
       //     config.headers.Authorization = "Bearer " + token;
       //   }
       const formData = new FormData();
-      Object.entries(config.data).forEach(([key, value]) => {
-        formData.append(key, value as string);
-      });
-      config.data = formData;
+      if (config.data) {
+        Object.entries(config.data).forEach(([key, value]) => {
+          formData.append(key, value as string);
+        });
+        config.data = formData;
+      }
     } catch (error) {
-      console.log("Error getting token from SecureStore", error);
+      console.log(error);
     }
     return config;
   },
