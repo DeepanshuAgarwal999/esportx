@@ -1,4 +1,4 @@
-import { View, Text, Image, ScrollView, useWindowDimensions } from 'react-native';
+import { View, Text, Image, ScrollView, useWindowDimensions, FlatList } from 'react-native';
 import React from 'react';
 import { useLocalSearchParams } from 'expo-router';
 import Button from '@/components/ui/Button';
@@ -7,7 +7,6 @@ const LobbyScreen = () => {
     const { id } = useLocalSearchParams();
     const { width } = useWindowDimensions();
     const imageSize = width * 0.08; // Adjust image size based on screen width
-    const teamContainerWidth = width * 0.2; // Adjust team box width
 
     return (
         <View className='bg-[#3c3c3c] flex-1 p-4 gap-2'>
@@ -22,28 +21,33 @@ const LobbyScreen = () => {
             </View>
 
             {/* Teams List */}
-            <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{ paddingHorizontal: 16 }}
-                className='w-full px-4 py-2 mx-auto mt-4 bg-black shrink-0'
+            <View
+                style={{ paddingHorizontal: 16 }}
+                className=' p-4 bg-black h-[60%]'
             >
-                {[...Array(4)].map((_, index) => (
-                    <View key={index} style={{ width: teamContainerWidth }} className='bg-[#333333] rounded-lg py-2 mx-2 '>
-                        <Text className='text-white pl-2 pb-1 text-center'>Team {index + 1}</Text>
-                        <View className='flex flex-row gap-1 flex-wrap items-center justify-center'>
-                            {[...Array(4)].map((_, imgIndex) => (
-                                <Image
-                                    key={imgIndex}
-                                    source={require('../../assets/icons/player-placeholder.png')}
-                                    alt='user'
-                                    style={{ width: imageSize, height: imageSize }}
-                                />
-                            ))}
+                <FlatList
+                    data={[...Array(6)]}
+                    numColumns={2}
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={{ paddingHorizontal: 8 }}
+                    renderItem={({ item, index }) => (
+                        <View key={index} className='bg-[#333333] rounded-lg py-2 m-3 flex-1'>
+                            <Text className='text-white pl-2 pb-1 text-center'>Team {index + 1}</Text>
+                            <View className='flex mt-2 flex-row gap-2 items-center justify-center'>
+                                {[...Array(4)].map((_, imgIndex) => (
+                                    <Image
+                                        key={imgIndex}
+                                        source={require('../../assets/icons/player-placeholder.png')}
+                                        alt='user'
+                                        style={{ width: imageSize, height: imageSize }}
+                                    />
+                                ))}
+                            </View>
                         </View>
-                    </View>
-                ))}
-            </ScrollView>
+                    )}
+                    keyExtractor={(_, index) => index.toString()}
+                />
+            </View>
 
             {/* Upload Button */}
             <Button onPress={() => { }} className='self-end mb-4 '>

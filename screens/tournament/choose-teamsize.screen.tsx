@@ -5,10 +5,11 @@ import { useTournament } from '@/context/tournament-provider'
 import { TournamentService } from '@/services/tournament-service'
 import { useRouter } from 'expo-router'
 import { useEffect, useState } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, ActivityIndicator } from 'react-native'
 
 const ChooseTeamSizeScreen = () => {
     const [teams, setTeams] = useState<{ id: number, name: string }[]>([])
+    const [isLoading, setIsLoading] = useState(true)
     const { alert } = useAlert()
     const router = useRouter()
     const { setTournament } = useTournament()
@@ -26,6 +27,9 @@ const ChooseTeamSizeScreen = () => {
                     router.back()
                 })
             }
+            finally {
+                setIsLoading(false)
+            }
         }
         getTeamType()
     }, [])
@@ -33,7 +37,6 @@ const ChooseTeamSizeScreen = () => {
 
     const handleSelectTeam = (id: number, name: string) => {
         setTournament((prev) => ({ ...prev, teamId: id, teamSize: name }))
-        console.log({ id, name });
         router.push('/(routes)/choosematches')
     }
 
@@ -41,15 +44,18 @@ const ChooseTeamSizeScreen = () => {
         <GlobalLayout>
             <View className='w-60 mx-auto justify-center gap-4 h-full'>
                 {
-                    teams.map((team, index) => (
-                        <Button
-                            key={index}
-                            onPress={() => handleSelectTeam(team.id, team.name)}
-                            textClassName='text-xl'
-                        >
-                            {team.name}
-                        </Button>
-                    ))}
+                    isLoading ? <ActivityIndicator color={'#fff'} /> : <>
+                        {
+                            teams.map((team, index) => (
+                                <Button
+                                    key={index}
+                                    onPress={() => handleSelectTeam(team.id, team.name)}
+                                    textClassName='text-xl'
+                                >
+                                    {team.name}
+                                </Button>
+                            ))}</>
+                }
             </View>
         </GlobalLayout >
     )

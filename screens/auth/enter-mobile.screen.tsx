@@ -3,6 +3,7 @@ import Button from "@/components/ui/Button";
 import InputField from "@/components/ui/InputField";
 import { useAlert } from "@/context/alert-provider";
 import { AuthService } from "@/services/auth-service";
+import { AxiosError } from "axios";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
@@ -31,7 +32,17 @@ const EnterMobileScreen = () => {
                 setNumber('')
             }
         } catch (error) {
-            alert('Failed', "Mobile number is not registered")
+            console.log(error);
+            if (error instanceof AxiosError) {
+                if (error.status === 400) {
+                    alert('Failed', "Invalid mobile number")
+                    return
+                }
+            } else {
+                alert('Failed', "Mobile number is not registered", () => {
+                    router.push('/(auth)/account-detail')
+                })
+            }
         }
         finally {
             setIsLoading(false)

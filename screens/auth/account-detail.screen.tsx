@@ -77,19 +77,13 @@ const AccountDetailScreen = () => {
             }
             try {
                 setIsLoading(true)
-                const user = await AuthService.signUp(userCredentials)
-                if (user) {
-                    setCredentials({
-                        username: "",
-                        userId: "",
-                        upiId: "",
-                        phone: "",
+                const otpSent = await AuthService.getOTP(credentials.phone)
+                if (otpSent) {
+                    router.push({
+                        pathname: '/(auth)/enter-otp', params: userCredentials
                     });
-                    const otpSent = await AuthService.getOTP(user.user_details.phone)
-                    if (otpSent) {
-                        router.push({ pathname: '/(auth)/enter-otp', params: { phone: user.user_details.phone } });
-                    }
                 }
+
             } catch (error: any) {
                 if (error instanceof AxiosError) {
                     console.log(error);

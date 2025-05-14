@@ -5,10 +5,11 @@ import { TournamentService } from '@/services/tournament-service'
 import { useRouter } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { View } from 'react-native'
+import { ActivityIndicator } from 'react-native-paper'
 
 const ChooseMatchesScreen = () => {
     const [matches, setMatches] = useState<{ id: number, name: string }[]>([])
-
+    const [isLoading, setIsLoading] = useState(true)
     const { tournament, setTournament } = useTournament()
     const router = useRouter()
 
@@ -26,6 +27,9 @@ const ChooseMatchesScreen = () => {
         } catch (error) {
             console.log(error);
         }
+        finally {
+            setIsLoading(false)
+        }
     }
 
     useEffect(() => {
@@ -40,15 +44,18 @@ const ChooseMatchesScreen = () => {
         <GlobalLayout>
             <View className='w-60 mx-auto justify-center gap-4 h-full'>
                 {
-                    matches?.map((match, index) => (
-                        <Button
-                            key={index}
-                            onPress={() => handleTournamentChange(match.id, match.name)}
-                            textClassName='text-xl'
-                        >
-                            {match.name}
-                        </Button>
-                    ))
+                    isLoading ? <ActivityIndicator color='#fff' /> :
+                        <>
+                            {matches?.map((match, index) => (
+                                <Button
+                                    key={index}
+                                    onPress={() => handleTournamentChange(match.id, match.name)}
+                                    textClassName='text-xl'
+                                >
+                                    {match.name}
+                                </Button>
+                            ))}
+                        </>
                 }
             </View>
         </GlobalLayout>
