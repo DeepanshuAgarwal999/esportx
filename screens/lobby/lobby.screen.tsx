@@ -6,7 +6,7 @@ import Button from '@/components/ui/Button';
 const LobbyScreen = () => {
     const { id } = useLocalSearchParams();
     const { width } = useWindowDimensions();
-    const imageSize = width * 0.08; // Adjust image size based on screen width
+    const imageSize = width * 0.085  ; // Adjust image size based on screen width
 
     return (
         <View className='bg-[#3c3c3c] flex-1 p-4 gap-2'>
@@ -29,11 +29,11 @@ const LobbyScreen = () => {
                     data={[...Array(6)]}
                     numColumns={2}
                     showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={{ paddingHorizontal: 8 }}
+                    contentContainerStyle={{ paddingHorizontal: 20 }}
                     renderItem={({ item, index }) => (
                         <View key={index} className='bg-[#333333] rounded-lg py-2 m-3 flex-1'>
                             <Text className='text-white pl-2 pb-1 text-center'>Team {index + 1}</Text>
-                            <View className='flex mt-2 flex-row gap-2 items-center justify-center'>
+                            <View className='flex mt-2 flex-row gap-4 items-center justify-center'>
                                 {[...Array(4)].map((_, imgIndex) => (
                                     <Image
                                         key={imgIndex}

@@ -8,7 +8,8 @@ type Tournament = {
     },
     teamId?: number | null,
     matchId?: number,
-    matchName?: string
+    matchName?: string,
+    isTeamLeader?: boolean,
 };
 
 type TournamentContextType = {

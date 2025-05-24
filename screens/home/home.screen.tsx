@@ -10,14 +10,18 @@ import {
     Text,
     Pressable,
     Image,
+    Platform,
+    ToastAndroid,
 } from 'react-native'
 import * as Clipboard from 'expo-clipboard';
 import JoinTeam from '@/components/global/tournament/join-team';
+import { useTournament } from '@/context/tournament-provider';
 
 const HomeScreen = () => {
     const router = useRouter()
     const { user } = useAuth()
     const { alert } = useAlert()
+    const { tournament, setTournament } = useTournament()
     const [isJoinModalVisible, setIsJoinModalVisible] = useState(false)
 
     const handleCreateTeam = async () => {
@@ -27,20 +31,42 @@ const HomeScreen = () => {
             return
         }
         try {
-            const { data } = await TournamentService.createTeam(id)
-            if (data) {
-                alert("Success", "Team created successfully, please copy the code and join the team \n\nCode: " + data.team_code, () => {
-                    Clipboard.setStringAsync(data.team_code)
-                })
+            const response = await TournamentService.createTeam(id)
+            const { data } = response
+            if (!data) {
+                throw new Error("Failed to create team")
             }
+            alert("Success", "Team created successfully, please copy the code and join the team \n\nCode: " + data.team_code, async () => {
+                try {
+                    await Clipboard.setStringAsync(data.team_code)
+                    if (Platform.OS === 'android') {
+                        ToastAndroid.show('Team code copied!', ToastAndroid.SHORT);
+                    }
+                    else {
+                        alert("Copied", "Team code copied to clipboard!")
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+
+            })
+            setTournament((prev) => ({ ...prev, isTeamLeader: true, teamId: data.team_id }))
         } catch (error) {
             console.log(error);
+            alert("Error", "Failed to create team")
         }
+    }
+
+    const handleJoinTournament = () => {
+        if (!tournament.isTeamLeader) {
+            ToastAndroid.show('You are not the team leader', ToastAndroid.SHORT);
+            return
+        }
+        router.push('/(routes)/chooseteamsize')
     }
 
     return (
         <GlobalLayout>
-
             <View style={{ flex: 1 }}>
                 <View className='flex justify-between flex-row pt-4 px-4'>
                     <View>
@@ -58,7 +84,7 @@ const HomeScreen = () => {
                     </View>
                 </View>
                 <JoinTeam isJoinModalVisible={isJoinModalVisible} setIsJoinModalVisible={setIsJoinModalVisible} />
-                <Button onPress={() => { router.push('/(routes)/chooseteamsize') }} className='w-60 mb-4 ml-4'>Join Tournament</Button>
+                <Button onPress={handleJoinTournament} className='w-60 mb-4 ml-4'>Join Tournament</Button>
             </View>
         </GlobalLayout>
     )

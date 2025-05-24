@@ -18,7 +18,7 @@ const InputField = ({
 }: InputFieldProps) => {
     return (
         <View className={`flex flex-col gap-2 ${className}`}>
-            {label && <Text className={`text-gray-100 text-sm ${labelClassName}`}>{label}</Text>}
+            {label && <Text className={`text-gray-100 text-base ${labelClassName}`}>{label}</Text>}
             <TextInput
                 style={{ color: "white" }}
                 placeholderTextColor={placeholderTextColor}

@@ -5,8 +5,8 @@ import { useRouter } from 'expo-router';
 import { View } from 'react-native';
 
 const buttons: { [key: string]: string } = {
+    "ACCOUNT INFO": "/profile",
     "AUDIO/SOUND": '/',
-    "PERMISSION": '/',
     "CONTACT US": '/(about)/contactus',
     "DELETE ACCOUNT": '/',
     "PRIVACY AND POLICY": '/',
@@ -20,8 +20,6 @@ const SettingScreen = () => {
     return (
         <GlobalLayout>
             <View className='w-60 ml-auto gap-1 py-1 justify-between h-full'>
-                <Button onPress={() => { }} className='!py-1.5' textClassName='text-lg'>Account Info</Button>
-                <Button onPress={() => logOut()} className='!py-1.5' textClassName='text-lg'>LOG OUT</Button>
                 {Object.keys(buttons).map((label, index) => (
                     <Button
                         key={index}
@@ -33,6 +31,7 @@ const SettingScreen = () => {
                     </Button>
                 ))}
 
+                <Button onPress={() => logOut()} className='!py-1.5' textClassName='text-lg'>LOG OUT</Button>
             </View>
         </GlobalLayout>
     );

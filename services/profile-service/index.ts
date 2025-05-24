@@ -1,23 +1,25 @@
 import axiosInstance from "../../config/axios.config";
 
 export class ProfileService {
-  static async getProfile(username: string) {
-    const response = await axiosInstance.get(`/profile/${username}`);
+  static async getProfile(userId: number) {
+    const response = await axiosInstance.post(`/getProfile`, {
+      user_id: userId,
+    });
     return response.data;
   }
 
   static async updateProfileByName(credentials: { user_id: string; first_name: string; last_name: string }) {
-    const response = await axiosInstance.put("/updateProfileName", credentials);
+    const response = await axiosInstance.post("/updateProfileName", credentials);
     return response.data;
   }
 
   static async updateGender(credentials: { user_id: string; gender: string }) {
-    const response = await axiosInstance.put("/updateGender", credentials);
+    const response = await axiosInstance.post("/updateGender", credentials);
     return response.data;
   }
 
   static async updateDob(credentials: { user_id: string; dob: string }) {
-    const response = await axiosInstance.put("/updateDob", credentials);
+    const response = await axiosInstance.post("/updateDob", credentials);
     return response.data;
   }
 
